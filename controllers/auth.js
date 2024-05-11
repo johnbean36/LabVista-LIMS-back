@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
-const { hashPassword } = require('../middleware/')
+const { hashPassword, comparePassword, stripToken, createToken, verifyToken } = require('../middleware/')
 
 async function signup(req,res){
     try{
@@ -25,7 +25,31 @@ async function signup(req,res){
 }
 
 async function signin(req,res){
-
+    try{
+        const { email, password } = req.body
+        let user = await User.findOne({email});
+        if(user){
+            let matched = comparePassword(user.password, password)
+            if(matched){
+                let payload = {
+                    id: user.id,
+                    email: user.email,
+                    name: user.name,
+                    rights: user.rights
+                }
+                let token = createToken(payload)
+                return res.send({ user: payload, token });
+            }
+            else{
+                return res.status(401).send("Invalid Password")
+            }
+        }
+        else{
+            return res.status(404).send("Invalid User")
+        }
+    }catch(error){
+        res.status(401).send({status: 'Error', msg: 'An error has occurred'});
+    }
 }
 
 module.exports = {

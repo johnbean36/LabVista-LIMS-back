@@ -18,7 +18,7 @@ const SampleSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     }
-});
+}, {timestamps: true});
 
 const Sample = mongoose.model('Sample', SampleSchema);
 

@@ -1,6 +1,9 @@
 require("dotenv").config();
 const express = require('express');
 require('./config/db.connection.js');
+const cors = require("cors");
+const morgan = require("morgan");
+
 const { PORT } = process.env;
 const signupRouter = require('./routes/signup');
 const signinRouter = require('./routes/signin');
@@ -10,6 +13,8 @@ const app = express();
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cors());
+app.use(morgan("dev"));
 app.use('/samples', samplesRouter);
 app.use('/signin', signinRouter);
 app.use('/signup', signupRouter);

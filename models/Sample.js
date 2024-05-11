@@ -17,6 +17,10 @@ const SampleSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    sampleid: {
+        type: Schema.Types.ObjectId,
+        ref: 'SampleId'
     }
 }, {timestamps: true});
 

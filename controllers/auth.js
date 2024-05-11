@@ -1,8 +1,8 @@
 const express = require('express');
 const User = require('../models/User');
-const { hashPassword, comparePassword, stripToken, createToken, verifyToken } = require('../middleware/')
+const { hashPassword, comparePassword, createToken, } = require('../middleware/')
 
-async function signup(req,res){
+async function signUp(req,res){
     try{
         const { email, password, name } = req.body;
         let passwordDigest = await hashPassword(password);
@@ -24,7 +24,7 @@ async function signup(req,res){
     }
 }
 
-async function signin(req,res){
+async function signIn(req,res){
     try{
         const { email, password } = req.body
         let user = await User.findOne({email});
@@ -53,6 +53,6 @@ async function signin(req,res){
 }
 
 module.exports = {
-    signup,
-    signin
+    signUp,
+    signIn
 }

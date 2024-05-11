@@ -31,7 +31,20 @@ function stripToken(req, res, next){
     }
 }
 
-function verifyToken()
+function verifyToken(req, res, next){
+    const { token } = res.locals;
+    try{
+        let payload = jwt.verify(token, APP_SECRET);
+        if(payload){
+            res.local.payload = payload;
+            return next()
+        }
+        res.status(401).send({status: 'Error', msg: 'Unauthorized'})
+    }catch(error){
+        console.log(error)
+        res.status(401).send({status: 'Error', msg: 'Verify token Error!'})
+    }
+}
 
 module.exports = {
     hashPassword,

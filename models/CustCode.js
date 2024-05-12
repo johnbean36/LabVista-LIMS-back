@@ -8,6 +8,6 @@ const CustSchema = new Schema({
     phone: {type: String}
 });
 
-const SCode = mongoose.model('SCode', SCodeSchema);
+const CustCode = mongoose.model('SCode', CustSchema);
 
 module.exports = CustCode;

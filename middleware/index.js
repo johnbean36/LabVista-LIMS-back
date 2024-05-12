@@ -42,7 +42,7 @@ function verifyRights(req, res, next){
 }
 
 function verifyToken(req, res, next){
-    const { token } = res.locals;
+    const token = res.locals.token;
     try{
         let payload = jwt.verify(token, APP_SECRET);
         if(payload){

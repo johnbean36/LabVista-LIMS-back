@@ -21,6 +21,9 @@ const SampleSchema = new Schema({
     sampleid: {
         type: Schema.Types.ObjectId,
         ref: 'SampleId'
+    },
+    validated: {
+        type: Boolean
     }
 }, {timestamps: true});
 

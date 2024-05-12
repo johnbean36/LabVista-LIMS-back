@@ -3,13 +3,6 @@ const router = express.Router();
 const samplesCtrl = require('../controllers/samples')
 const { stripToken, verifyRights, verifyToken } = require('../middleware');
 
-/*router.get(
-    '/idnumber',
-    stripToken,
-    verifyToken,
-    samplesCtrl.idLookup
-)*/
-
 router.post(
     '/register',
     stripToken,
@@ -21,14 +14,21 @@ router.get(
     '/customer',
     stripToken,
     verifyToken,
-    sampleCtrl.getCust
+    samplesCtrl.getCust
 )
 
 router.get(
     '/commodity',
     stripToken,
     verifyToken,
-    sampleCtrl.getComm
+    samplesCtrl.getComm
+)
+
+router.get(
+    '/tests',
+    stripToken,
+    verifyToken,
+    samples.getTest
 )
 
 module.exports = router

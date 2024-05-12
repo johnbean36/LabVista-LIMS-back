@@ -109,7 +109,31 @@ async function checkId(req, res, next){
 
 async function viewSamples(req, res, next){
     let samples = req.body.samples;
-    
+
+}
+
+async function deleteSamples(req, res, next){
+
+}
+
+async function viewByDate(req, res, next){
+
+}
+
+async function overDueList(req, res, next){
+
+}
+
+async function getValidate(req, res, next){
+
+}
+
+async function validate(req, res, next){
+
+}
+
+async function getReport(req, res, next){
+
 }
 
 
@@ -120,5 +144,11 @@ module.exports = {
     getComm,
     getTest,
     viewSamples,
-    checkId
+    checkId,
+    deleteSamples,
+    viewByDate,
+    overDueList,
+    getValidate,
+    validate,
+    getReport
 }

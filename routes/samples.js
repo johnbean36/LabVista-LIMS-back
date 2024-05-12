@@ -39,10 +39,56 @@ router.post(
 )
 
 router.get(
-    'checkId',
+    '/checkId',
     stripToken,
     verifyToken,
     samplesCtrl.checkId
+)
+
+router.post(
+    '/deletesamples',
+    stripToken,
+    verifyToken,
+    verifyRights,
+    samplesCtrl.deleteSamples
+)
+
+router.get(
+    '/viewbydate',
+    stripToken,
+    verifyToken,
+    samplesCtrl.viewByDate
+)
+
+router.get(
+    '/overduelist',
+    stripToken,
+    verifyToken,
+    samplesCtrl.overDueList
+)
+
+router.post(
+    '/getvalidate',
+    stripToken,
+    verifyToken,
+    verifyRights,
+    samplesCtrl.getValidate
+)
+
+router.post(
+    '/validate',
+    stripToken,
+    verifyToken,
+    verifyRights,
+    samplesCtrl.validate
+)
+
+router.post(
+    '/getReport',
+    stripToken,
+    verifyToken,
+    verifyRights,
+    samplesCtrl.getReport
 )
 
 module.exports = router

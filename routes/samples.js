@@ -28,7 +28,21 @@ router.get(
     '/tests',
     stripToken,
     verifyToken,
-    samples.getTest
+    samplesCtrl.getTest
+)
+
+router.post(
+    '/viewsamples',
+    stripToken,
+    verifyToken,
+    samplesCtrl.viewSamples
+)
+
+router.get(
+    'checkId',
+    stripToken,
+    verifyToken,
+    samplesCtrl.checkId
 )
 
 module.exports = router

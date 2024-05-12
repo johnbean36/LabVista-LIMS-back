@@ -91,7 +91,26 @@ async function getTest(req, res, next){
     }
 }
 
+async function checkId(req, res, next){
+    let check = false;
+    let id = req.body.id;
+    try{
+        check = await SampleId.findOne({id});
+        if(check){
+            res.status(200).send("ID found");
+        }
+        else{
+            res.status(404).send("Not found");
+        }
+    }catch(err){
+        res.status(500).send("Server error");
+    }
+}
 
+async function viewSamples(req, res, next){
+    let samples = req.body.samples;
+    
+}
 
 
 
@@ -99,5 +118,7 @@ module.exports = {
     getCust,
     registerSample,
     getComm,
-    getTest
+    getTest,
+    viewSamples,
+    checkId
 }

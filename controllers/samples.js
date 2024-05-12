@@ -5,6 +5,7 @@ const CCode = require('../models/CCode');
 const Test  = require('../models/Test');
 const Sample = require('../models/Sample');
 const User = require('../models/User');
+const SampleTest = require('../models/SampleTest');
 
 async function idLookup(){
     let count = await SampleId.countDocuments({});
@@ -25,21 +26,34 @@ async function registerSample(req, res, next){
     const { sampleData } = req.body;
     let samples = [];
     let payload = res.locals.payload;
-    await Promise.all(sampleData.map(async (sample)=>{
-        let id = 0;
-        let sampleId = 0;
-        let sample;
-        sampleId = await idLookup() + 1;
-        id = await SampleId.create({
-            sampleid: sampleId
-        })
-        sample = await Sample.create({
-            sampleid: id._id,
-            user: payload.id,
-            customer: sample.cust_id,
-            commodity: sample.ccode_id
-        })
-    }))
+    try{
+        await Promise.all(sampleData.map(async (sample)=>{
+            let id = 0;
+            let sampleId = 0;
+            let sampleCreation;
+            sampleId = await idLookup() + 1;
+            id = await SampleId.create({
+                sampleid: sampleId
+            })
+            const tests = await Promise.all(sample.tests.map(async (test)=>{
+                await SampleTest.create({
+                    name: test.name,
+                    sampleId: id._id
+                });
+            }))
+            sampleCreation = await Sample.create({
+                sampleid: id._id,
+                user: payload.id,
+                customer: sample.cust_id,
+                commodity: sample.ccode_id
+            })
+            samples.push(sampleCreation);
+        }))
+        res.status(201).json(samples);
+    }catch(err){
+        console.log(err)
+        res.status(500).json({message: "There was an error registering samples.  Please check if any samples were successful"})
+    }
 }
 
 async function getCust(req, res, next){

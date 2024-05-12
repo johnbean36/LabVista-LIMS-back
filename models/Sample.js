@@ -22,6 +22,10 @@ const SampleSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'SampleId'
     },
+    logindate: {
+        type: String,
+        required: true
+    },
     validated: {
         type: Boolean
     }

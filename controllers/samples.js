@@ -12,7 +12,7 @@ async function idLookup(){
     if(count === 0){
         return 0;
     }
-    let lastId = await SampleId.findOne().sort({ _id: -1 })
+    let lastId = await SampleId.findOne({}).sort({ _id: -1 })
     if(lastId){
         let sampleId = lastId.sampleId
         return sampleId;
@@ -44,6 +44,7 @@ async function registerSample(req, res, next){
             sampleCreation = await Sample.create({
                 sampleid: id._id,
                 user: payload.id,
+                logindate: sample.date,
                 customer: sample.cust_id,
                 commodity: sample.ccode_id
             })
@@ -95,7 +96,7 @@ async function checkId(req, res, next){
     let check = false;
     let id = req.body.id;
     try{
-        check = await SampleId.findOne({id});
+        check = await SampleId.findOne({sampleid: id});
         if(check){
             res.status(200).send("ID found");
         }
@@ -109,11 +110,28 @@ async function checkId(req, res, next){
 
 async function viewSamples(req, res, next){
     let samples = req.body.samples;
-
+    try{
+        const sampleList = await Promise.all(samples.map(async (sample)=>{
+            return await Sample.findOne({ sampleid: sample.sampleid }).populate("sampleid");
+    }))
+    res.json(sampleList);
+    }catch(err){
+        res.status(500).send("Server error")
+    }
 }
 
 async function deleteSamples(req, res, next){
-
+    let samples = req.body.samples;
+    try{
+        await Promise.all(samples.map(async (sample)=>{
+            const keyid = await SampleId.findOne({sampleid: sample.sampleid})
+            await Sample.deleteOne({_id: keyid._id});
+            await SampleTest.deleteMany({sampleid: keyid._id});
+        }))
+        res.status(200).send("Successful deletion")
+    }catch(err){
+        res.status(500).send("Server Internal Error");
+    }
 }
 
 async function viewByDate(req, res, next){
@@ -133,6 +151,10 @@ async function validate(req, res, next){
 }
 
 async function getReport(req, res, next){
+
+}
+
+async function updateSamples(req, res, next){
 
 }
 

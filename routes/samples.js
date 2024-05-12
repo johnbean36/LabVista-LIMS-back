@@ -45,7 +45,7 @@ router.get(
     samplesCtrl.checkId
 )
 
-router.post(
+router.delete(
     '/deletesamples',
     stripToken,
     verifyToken,
@@ -89,6 +89,13 @@ router.post(
     verifyToken,
     verifyRights,
     samplesCtrl.getReport
+)
+
+router.update(
+    'updatesamples',
+    stripToken,
+    verifyToken,
+    samplesCtrl.updateSamples
 )
 
 module.exports = router

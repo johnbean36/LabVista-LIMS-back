@@ -194,7 +194,14 @@ async function getReport(req, res, next){
 }
 
 async function updateSamples(req, res, next){
-
+    let sampleList = req.body.sampleList;
+    await Promise.all(sampleList.map(async (sample)=>{
+        await Promise.all(sample.tests.map(async (test)=>{
+            let updateObject = {};
+            updateObject[`test.${test.name}`] = test.result;
+            SampleTest.findOneAndUpdate({name: test.name, sampleId: mongoose.Types.ObjectId(sample.sampleId)}, {$set: updateObject}).populate("sampleId")
+        }))
+    }))
 }
 
 module.exports = {
@@ -208,6 +215,6 @@ module.exports = {
     viewByDate,
     overDueList,
     setValidate,
-    validate,
+    updateSamples,
     getReport
 }

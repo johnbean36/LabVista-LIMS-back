@@ -135,7 +135,17 @@ async function deleteSamples(req, res, next){
 }
 
 async function viewByDate(req, res, next){
-
+    let sDate = req.body.date;
+    try{
+        const viewDate = await Sample.find({date: sDate})
+        if(viewDate.length === 0){
+            return res.status(404).send("Samples not found");
+        }
+        res.json(viewDate);
+    }catch(err){
+        console.log(err);
+        res.status(500).send("Server Internal Error")
+    }
 }
 
 async function overDueList(req, res, next){

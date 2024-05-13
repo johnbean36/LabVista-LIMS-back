@@ -159,23 +159,36 @@ async function overDueList(req, res, next){
     }
 }
 
-async function getValidate(req, res, next){
-
-}
-
-async function validate(req, res, next){
-
+async function setValidate(req, res, next){
+    let sampleList = req.body.sampleList;
+    try{
+        let newArray = await Promise.all(sampleList.map(async (sample)=>{
+            if(sample.validated){
+                return await Sample.findOneAndUpdate(
+                    {_id: sample.id},
+                    { $set: {validated: true}},
+                    { new: true}
+                    ).populate("SampleId")
+            }
+        }))
+        res.json(newArray);
+    }catch(err){
+        res.status(500).send("Server Internal Error");
+    }
 }
 
 async function getReport(req, res, next){
-
+    let sampleList = req.body.sampleList;
+    try{
+        await Promise.all(sampleList.map(async (sample)))
+    }catch(err){
+        res.status(500).send("Server Internal Error")
+    }
 }
 
 async function updateSamples(req, res, next){
 
 }
-
-
 
 module.exports = {
     getCust,
@@ -187,7 +200,7 @@ module.exports = {
     deleteSamples,
     viewByDate,
     overDueList,
-    getValidate,
+    setValidate,
     validate,
     getReport
 }

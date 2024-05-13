@@ -179,8 +179,15 @@ async function setValidate(req, res, next){
 
 async function getReport(req, res, next){
     let sampleList = req.body.sampleList;
+    let anArray = [];
     try{
-        await Promise.all(sampleList.map(async (sample)))
+        anArray = await Promise.all(sampleList.map(async (sample)=>{
+            let result = await Sample.findOne({_id: sample.id}).populate("sampleid");
+            if(result && result.validated){
+                return result;
+            }
+        }))
+        res.json(anArray);
     }catch(err){
         res.status(500).send("Server Internal Error")
     }

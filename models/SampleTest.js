@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const SampleTestSchema = new Schema({
     name: {type: String, required: true},
-    result: {type: Number},
+    result: {type: Number, default: null, required: true},
     sampleId: { type: Schema.Types.ObjectId, ref: 'SampleId'}
 });
 

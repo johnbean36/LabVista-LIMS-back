@@ -39,7 +39,7 @@ async function signIn(req,res){
                 }
                 let token = createToken(payload)
 
-                return res.status(200).json({ user: payload, token: token });
+                return res.status(200).send({ user: payload, token });
                 //return res.send({ user: payload, token });
             }
             else{

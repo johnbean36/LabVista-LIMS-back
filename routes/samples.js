@@ -83,7 +83,7 @@ router.post(
     samplesCtrl.getReport
 )
 
-router.update(
+router.post(
     'updatesamples',
     stripToken,
     verifyToken,

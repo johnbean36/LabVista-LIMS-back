@@ -68,19 +68,11 @@ router.get(
 )
 
 router.post(
-    '/getvalidate',
-    stripToken,
-    verifyToken,
-    verifyRights,
-    samplesCtrl.getValidate
-)
-
-router.post(
     '/validate',
     stripToken,
     verifyToken,
     verifyRights,
-    samplesCtrl.validate
+    samplesCtrl.setValidate
 )
 
 router.post(

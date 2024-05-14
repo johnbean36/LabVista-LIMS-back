@@ -38,7 +38,9 @@ async function signIn(req,res){
                     rights: user.rights
                 }
                 let token = createToken(payload)
-                return res.send({ user: payload, token });
+
+                return res.status(200).json({ user: payload, token: token });
+                //return res.send({ user: payload, token });
             }
             else{
                 return res.status(401).send("Invalid Password")

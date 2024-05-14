@@ -29,7 +29,7 @@ async function signIn(req,res){
         const { email, password } = req.body
         let user = await User.findOne({email});
         if(user){
-            let matched = comparePassword(user.password, password)
+            let matched = await comparePassword(user.password, password)
             if(matched){
                 let payload = {
                     id: user.id,

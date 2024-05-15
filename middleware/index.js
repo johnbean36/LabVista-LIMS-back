@@ -37,7 +37,7 @@ function stripToken(req, res, next){
 }
 
 function verifyRights(req, res, next){
-    if(res.local.payload.rights === "user+"){
+    if(res.locals.payload.rights === "user+"){
         return next();
     }
     else{
@@ -46,16 +46,13 @@ function verifyRights(req, res, next){
 }
 
 function verifyToken(req, res, next){
-    console.log(res.locals.token, "Verify token")
     const token = res.locals.token;
     try{
         let payload = jwt.verify(token, APP_SECRET);
-        console.log(payload, "payload")
         if(payload){
             res.locals.payload = payload;
             return next()
         }
-        console.log("The error is here")
         res.status(401).send({status: 'Error', msg: 'Unauthorized'})
     }catch(error){
         console.log(error)

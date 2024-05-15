@@ -52,7 +52,7 @@ function verifyToken(req, res, next){
         let payload = jwt.verify(token, APP_SECRET);
         console.log(payload, "payload")
         if(payload){
-            res.local.payload = payload;
+            res.locals.payload = payload;
             return next()
         }
         console.log("The error is here")

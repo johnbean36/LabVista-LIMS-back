@@ -36,6 +36,7 @@ async function registerSample(req, res, next){
                 sampleid: sampleId
             })
             const tests = await Promise.all(sample.tests.map(async (test)=>{
+
                 await SampleTest.create({
                     name: test.name,
                     sampleId: id._id
@@ -45,8 +46,8 @@ async function registerSample(req, res, next){
                 sampleid: id._id,
                 user: payload.id,
                 logindate: sample.date,
-                customer: sample.cust_id,
-                commodity: sample.ccode_id
+                customer: sample.cust,
+                commodity: sample.commodity
             })
             samples.push(sampleCreation);
         }))

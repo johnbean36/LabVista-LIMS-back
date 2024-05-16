@@ -26,6 +26,7 @@ async function registerSample(req, res, next){
     const { sampleData } = req.body;
     let samples = [];
     let payload = res.locals.payload;
+    console.log(sampleData);
     try{
         await Promise.all(sampleData.map(async (sample)=>{
             let id = 0;

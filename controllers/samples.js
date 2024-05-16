@@ -21,7 +21,7 @@ async function idLookup(){
     }
 }
 
-async function getIds(){
+async function getIds(req, res, next){
     try{
         const id = await SampleId.find({});
         console.log(id)

@@ -24,12 +24,12 @@ async function idLookup(){
 async function getIds(){
     try{
         const id = await SampleId.find({});
+        console.log(id)
         res.json(id);
     }catch(err){
         console.log(err);
         res.status(500).send("Internal Service Error")
     }
-
 }
 
 async function registerSample(req, res, next){

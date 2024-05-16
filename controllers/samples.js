@@ -27,7 +27,7 @@ async function registerSample(req, res, next){
     let payload = res.locals.payload;;
     try{
         await Promise.all(sampleData.map(async (sample)=>{
-            let id = 0;
+            let id ;
             let sampleId = 0;
             let sampleCreation;
             sampleId = await idLookup();
@@ -38,7 +38,7 @@ async function registerSample(req, res, next){
             const tests = await Promise.all(sample.tests.map(async (test)=>{
                 let testName = await Test.findById(test);
                 await SampleTest.create({
-                    name: testName,
+                    name: testName.name,
                     sampleId: id._id
                 });
             }))
@@ -156,8 +156,9 @@ async function viewByDate(req, res, next){
 async function overDueList(req, res, next){
     let testName = req.body.testName;
     try{
-        const overdueList = await SampleTest.find({name: testName, result: null}).select('sampleId -_id').populate("sampleId");
-        res.json(overdueList)
+        const overdueList = await SampleTest.find({name: testName, result: null}).populate('sampleId')
+        const sampleIds = overdueList.map((test)=> test.sampleId.sampleid)
+        res.json(sampleIds)
     }catch(err){
         console.log(err)
         res.status(500).send("Server Internal Error");

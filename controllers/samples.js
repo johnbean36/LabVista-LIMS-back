@@ -42,12 +42,16 @@ async function registerSample(req, res, next){
                     sampleId: id._id
                 });
             }))
+            let cust = sample.cust;
+            let com = sample.commodity;
+            const samplecust = await CustCode.find({cust})
+            const samplecom = await CCode.find({com});
             sampleCreation = await Sample.create({
                 sampleid: id._id,
                 user: payload.id,
                 logindate: sample.date,
-                customer: sample.cust,
-                commodity: sample.commodity
+                customer: samplecust._id,
+                commodity: samplecom._id
             })
             samples.push(sampleCreation);
         }))

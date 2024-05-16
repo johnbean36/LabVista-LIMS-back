@@ -24,19 +24,19 @@ async function idLookup(){
 async function registerSample(req, res, next){
     const { sampleData } = req.body;
     let samples = [];
-    let payload = res.locals.payload;
-    console.log(sampleData);
+    let payload = res.locals.payload;;
     try{
         await Promise.all(sampleData.map(async (sample)=>{
             let id = 0;
             let sampleId = 0;
             let sampleCreation;
-            sampleId = await idLookup() + 1;
+            sampleId = await idLookup();
+            sampleId = sampleId + 1;
             id = await SampleId.create({
                 sampleid: sampleId
             })
             const tests = await Promise.all(sample.tests.map(async (test)=>{
-
+                console.log(test);
                 await SampleTest.create({
                     name: test.name,
                     sampleId: id._id

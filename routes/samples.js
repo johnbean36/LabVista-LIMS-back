@@ -60,7 +60,7 @@ router.get(
     samplesCtrl.viewByDate
 )
 
-router.get(
+router.post(
     '/overduelist',
     stripToken,
     verifyToken,

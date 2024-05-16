@@ -3,6 +3,13 @@ const router = express.Router();
 const samplesCtrl = require('../controllers/samples')
 const { stripToken, verifyRights, verifyToken } = require('../middleware');
 
+router.get(
+    '/sampleid',
+    stripToken,
+    verifyToken,
+    samplesCtrl.getIds
+)
+
 router.post(
     '/register',
     stripToken,

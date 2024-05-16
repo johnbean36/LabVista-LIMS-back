@@ -21,6 +21,17 @@ async function idLookup(){
     }
 }
 
+async function getIds(){
+    try{
+        const id = await SampleId.find({});
+        res.json(id);
+    }catch(err){
+        console.log(err);
+        res.status(500).send("Internal Service Error")
+    }
+
+}
+
 async function registerSample(req, res, next){
     const { sampleData } = req.body;
     let samples = [];
@@ -222,5 +233,6 @@ module.exports = {
     overDueList,
     setValidate,
     updateSamples,
-    getReport
+    getReport,
+    getIds
 }

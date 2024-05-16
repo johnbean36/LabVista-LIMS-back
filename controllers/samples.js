@@ -12,10 +12,9 @@ async function idLookup(){
     if(count === 0){
         return 0;
     }
-    let lastId = await SampleId.findOne({}).sort({ _id: -1 })
-    if(lastId){
-        let sampleId = lastId.sampleId
-        return sampleId;
+    let lastId = await SampleId.findOne({}).sort({ _id: -1 }).exec();
+    if(lastId.sampleid){
+        return lastId.sampleid
     }
     else{
         console.log("Error finding Sample ID")

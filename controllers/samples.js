@@ -156,7 +156,7 @@ async function viewByDate(req, res, next){
 async function overDueList(req, res, next){
     let testName = req.body.testName;
     try{
-        const overdueList = await SampleTest.find({name: testName, result: null});
+        const overdueList = await SampleTest.find({name: testName, result: null}).select('sampleId -_id').populate("sampleId");
         res.json(overdueList)
     }catch(err){
         console.log(err)

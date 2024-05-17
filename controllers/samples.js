@@ -128,7 +128,8 @@ async function checkId(req, res, next){
 }
 
 async function viewSamples(req, res, next){
-    let samples = req.body.samples;
+    let samples = req.body;
+    console.log(samples)
     try{
         const sampleList = await Promise.all(samples.map(async (sample)=>{
             return await Sample.findOne({ sampleid: sample.sampleid }).populate("sampleid");

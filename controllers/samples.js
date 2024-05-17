@@ -141,9 +141,9 @@ async function deleteSamples(req, res, next){
     console.log(samples)
     try{
         await Promise.all(samples.map(async (sample)=>{
-            const keyid = await SampleId.findOne({sampleid: sample.sampleid})
+            const sam = sample.id;
+            const keyid = await SampleId.findOne({sam})
             await Sample.deleteOne({_id: keyid._id});
-            await SampleTest.deleteMany({sampleid: keyid._id});
         }))
         res.status(200).send("Successful deletion")
     }catch(err){

@@ -62,7 +62,8 @@ async function registerSample(req, res, next){
                 user: payload.id,
                 logindate: sample.date,
                 customer: samplecust._id,
-                commodity: samplecom._id
+                commodity: samplecom._id,
+                tests: tests
             })
             samples.push(sampleCreation);
         }))

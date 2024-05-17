@@ -52,7 +52,7 @@ router.get(
     samplesCtrl.checkId
 )
 
-router.delete(
+router.post(
     '/deletesamples',
     stripToken,
     verifyToken,

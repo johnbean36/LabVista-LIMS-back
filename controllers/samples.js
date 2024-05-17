@@ -129,11 +129,17 @@ async function checkId(req, res, next){
 
 async function viewSamples(req, res, next){
     let samples = req.body;
+    let samplePush = [];
     console.log(samples)
     try{
         const sampleList = await Promise.all(samples.map(async (sample)=>{
-            return await Sample.findOne({ sampleid: sample.sampleid }).populate("sampleid");
+            const sam = sample.sampleid;
+            const keyid = await SampleId.findOne({sampleid: sam})
+            const samid = await Sample.findOne({sampleid: keyid._id}).populate('sampleid');
+            return samid
+            //return await Sample.findOne({ sampleid: sample.sampleid }).populate("sampleid");
     }))
+    console.log(sampleList);
     res.json(sampleList);
     }catch(err){
         res.status(500).send("Server error")

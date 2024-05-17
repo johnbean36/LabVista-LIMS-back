@@ -138,13 +138,11 @@ async function viewSamples(req, res, next){
 
 async function deleteSamples(req, res, next){
     let samples = req.body;
-    console.log(samples)
     try{
         await Promise.all(samples.map(async (sample)=>{
-            const sam = sample.sampleid;
-            console.log(sam);
-            const keyid = await SampleId.findOne({sam})
-            const samid = await Sample.findOne({sampleid: keyid});
+            const sam = sample.sampleid;            const keyid = await SampleId.findOne({sam})
+            const samid = await Sample.findOne({sampleid: sam});
+            console.log(samid)
             console.log(samid);
             await Sample.deleteOne({_id: samid._id});
         }))

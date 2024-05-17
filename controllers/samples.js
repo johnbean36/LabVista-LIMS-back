@@ -143,7 +143,7 @@ async function deleteSamples(req, res, next){
             const sam = sample.sampleid;           
             const keyid = await SampleId.findOne({sam})
             console.log('this');
-            const samid = await Sample.findOne({sampleid: sam}).populate(sampleid);
+            const samid = await Sample.findOne({sampleid: sam}).populate('sampleid');
             console.log("hello");
             console.log(samid.sampleid);
             await Sample.deleteOne({_id: samid._id});

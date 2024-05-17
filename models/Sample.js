@@ -8,7 +8,7 @@ const SampleSchema = new Schema({
     },
     tests: [{
         type: Schema.Types.ObjectId,
-        ref: 'Test'
+        ref: 'SampleTest'
     }],
     customer: {
         type: Schema.Types.ObjectId,

@@ -66,6 +66,7 @@ async function registerSample(req, res, next){
                 commodity: samplecom._id,
                 tests: tests
             })
+            await sampleCreation.populate('sampleid');
             samples.push(sampleCreation);
         }))
         res.status(201).json(samples);

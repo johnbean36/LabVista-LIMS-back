@@ -48,7 +48,7 @@ async function registerSample(req, res, next){
             })
             const tests = await Promise.all(sample.tests.map(async (test)=>{
                 let testName = await Test.findById(test);
-                await SampleTest.create({
+                return await SampleTest.create({
                     name: testName.name,
                     sampleId: id._id
                 });

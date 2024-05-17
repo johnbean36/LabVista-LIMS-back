@@ -150,6 +150,7 @@ async function deleteSamples(req, res, next){
         }))
         res.status(200).send("Successful deletion")
     }catch(err){
+        console.log(err);
         res.status(500).send("Server Internal Error");
     }
 }

@@ -135,7 +135,7 @@ async function viewSamples(req, res, next){
         const sampleList = await Promise.all(samples.map(async (sample)=>{
             const sam = sample.sampleid;
             const keyid = await SampleId.findOne({sampleid: sam})
-            const samid = await Sample.findOne({sampleid: keyid._id}).populate('sampleid');
+            const samid = await Sample.findOne({sampleid: keyid._id}).populate('sampleid').populate('tests');
             return samid
             //return await Sample.findOne({ sampleid: sample.sampleid }).populate("sampleid");
     }))

@@ -141,7 +141,7 @@ async function deleteSamples(req, res, next){
     console.log(samples)
     try{
         await Promise.all(samples.map(async (sample)=>{
-            const sam = sample.id;
+            const sam = sample.sampleid;
             console.log(sam);
             const keyid = await SampleId.findOne({sam})
             const samid = await Sample.findOne({sampleid: keyid});

@@ -55,6 +55,7 @@ async function registerSample(req, res, next){
             }))
             let cust = sample.cust;
             let com = sample.commodity;
+            console.log(tests);
             const samplecust = await CustCode.find({cust})
             const samplecom = await CCode.find({com});
             sampleCreation = await Sample.create({

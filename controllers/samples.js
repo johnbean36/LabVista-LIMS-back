@@ -226,7 +226,10 @@ async function updateSamples(req, res, next){
         const tests = sampleObj.tests;
         await Promise.all(tests.forEach(async (test)=>{
             const name = test.name;
-            const result = sample[test.name]
+            let result = sample[test.name]
+            if(result===""){
+                result = null;
+            }
             await SampleTest.findOneAndUpdate({name: name, sampleId: sampleids._id}, {$set: {result: result}})
         }))
             

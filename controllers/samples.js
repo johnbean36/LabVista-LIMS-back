@@ -220,6 +220,7 @@ async function getReport(req, res, next){
 
 async function updateSamples(req, res, next){
     let sampleList = req.body;
+    console.log("hello")
     for (let sample in sampleList){
         const sampleids = await SampleId.findOne({sampleid: sample})
         const sampleObj = await Sample.findOne({sampleid: sampleids._id})

@@ -24,7 +24,6 @@ async function idLookup(){
 async function getIds(req, res, next){
     try{
         const id = await SampleId.find({});
-        console.log(id)
         res.json(id);
     }catch(err){
         console.log(err);
@@ -55,7 +54,6 @@ async function registerSample(req, res, next){
             }))
             let cust = sample.cust;
             let com = sample.commodity;
-            console.log(tests);
             const samplecust = await CustCode.find({cust})
             const samplecom = await CCode.find({com});
             sampleCreation = await Sample.create({
@@ -130,7 +128,6 @@ async function checkId(req, res, next){
 async function viewSamples(req, res, next){
     let samples = req.body;
     let samplePush = [];
-    console.log(samples)
     try{
         const sampleList = await Promise.all(samples.map(async (sample)=>{
             const sam = sample.sampleid;
@@ -139,7 +136,6 @@ async function viewSamples(req, res, next){
             return samid
             //return await Sample.findOne({ sampleid: sample.sampleid }).populate("sampleid");
     }))
-    console.log(sampleList);
     res.json(sampleList);
     }catch(err){
         res.status(500).send("Server error")
@@ -223,15 +219,28 @@ async function getReport(req, res, next){
 }
 
 async function updateSamples(req, res, next){
-    let sampleList = req.body.sampleList;
+    let sampleList = req.body;
+    for (let sample in sampleList){
+        const sampleids = await SampleId.findOne({sampleid: sample})
+        const sampleObj = await Sample.findOne({sampleid: sampleids._id})
+        const tests = sampleObj.tests;
+        await Promise.all(tests.forEach(async (test)=>{
+            const name = test.name;
+            const result = sample[test.name]
+            await SampleTest.findOneAndUpdate({name: name, sampleId: sampleids._id}, {$set: {result: result}})
+        }))
+            
+        }
+    }
+    /*
     await Promise.all(sampleList.map(async (sample)=>{
         await Promise.all(sample.tests.map(async (test)=>{
             let updateObject = {};
             updateObject[`test.${test.name}`] = test.result;
             SampleTest.findOneAndUpdate({name: test.name, sampleId: mongoose.Types.ObjectId(sample.sampleId)}, {$set: updateObject}).populate("sampleId")
         }))
-    }))
-}
+    }))*/
+
 
 module.exports = {
     getCust,
